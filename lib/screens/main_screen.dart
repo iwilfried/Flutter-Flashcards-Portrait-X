@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../models/category.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -10,6 +14,29 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  List<Category> categories = [];
+  String title = "";
+  String lesson = "";
+
+  Future<void> loadData() async {
+    String data =
+        await DefaultAssetBundle.of(context).loadString("assets/slides.json");
+    final jsonResult = jsonDecode(data); //latest Dart
+    final catJson = jsonResult['Categories'];
+    setState(() {
+      title = jsonResult['title'];
+      lesson = jsonResult['lesson'];
+      categories =
+          List<Category>.from(catJson.map((e) => Category.fromJson(e)));
+    });
+  }
+
+  @override
+  void initState() {
+    loadData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -143,7 +170,7 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                       const Spacer(),
                       AutoSizeText(
-                        'General Data Protection Regulation(GDPR) FlashCards',
+                        '$title FlashCards',
                         maxLines: 4,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.oswald(
@@ -195,7 +222,7 @@ class _MainScreenState extends State<MainScreen> {
               height: 45,
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: AutoSizeText("General Data Protection Regulation(GDPR)",
+                child: AutoSizeText(title,
                     maxLines: 1,
                     style: GoogleFonts.robotoSlab(
                       textStyle: GoogleFonts.robotoSlab(
