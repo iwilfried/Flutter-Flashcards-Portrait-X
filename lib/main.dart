@@ -12,7 +12,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flash cards',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+        primaryColor: const Color(0xff333333),
+        backgroundColor: Colors.white,
+        shadowColor: const Color(0xff333333),
+        cardColor: Colors.white,
       ),
       home: MainScreen(),
     );
