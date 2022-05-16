@@ -6,13 +6,15 @@ A new Flutter project.
 
 This project is a starting point for a Flutter application.
 
-Flutter 3.0.0 • channel stable • https://github.com/flutter/flutter.git
-Framework • revision ee4e09cce0 (6 days ago) • 2022-05-09 16:45:18 -0700
-Engine • revision d1b9a6938a
-Tools • Dart 2.17.0 • DevTools 2.12.2
+Flutter 3.0.0 • channel stable • https://github.com/flutter/flutter.git  
+Framework • revision ee4e09cce0 (6 days ago) • 2022-05-09 16:45:18 -0700  
+Engine • revision d1b9a6938a  
+Tools • Dart 2.17.0 • DevTools 2.12.2  
 
-Running flutter doctor...
-Doctor summary (to see all details, run flutter doctor -v):
+
+Running flutter doctor...  
+Doctor summary (to see all details, run flutter doctor -v):  
+
 [✓] Flutter (Channel stable, 3.0.0, on Microsoft Windows [Version 10.0.22000.675], locale de-DE)  
 [✓] Android toolchain - develop for Android devices (Android SDK version 32.1.0-rc1)  
 [✓] Chrome - develop for the web  
