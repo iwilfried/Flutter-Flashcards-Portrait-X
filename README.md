@@ -1,34 +1,36 @@
-# Chapter 1: Create App bar for
+# Chapter 2: Create Home Screen
 
 ## Steps: 
 
-### 1- create an AppBar Widget
-create appbar widget under lib/widgets folder 
+### 1- add the new assets 
+add the background images and the logo to the images folder assets/images
 
-<img width="341" alt="image" src="https://user-images.githubusercontent.com/18642838/170257143-4d1f1cf4-5e39-49d6-a388-d73b305652b2.png">
-<br/><br/>
+<img width="331" alt="image" src="https://user-images.githubusercontent.com/18642838/170261690-252d8582-ccde-477f-a951-b0b5d1753127.png">
 
-### 2- add the libraries we are going to use to pubspec.yaml 
-```
-  google_fonts: ^2.3.2
-  auto_size_text: ^3.0.0
-```
-### 3- adding assets 
+### 2- create home screen
 
-create an assets folder in the root folder then create an images folder inside it and add the image there. 
 
-<img width="341" alt="image" src="https://user-images.githubusercontent.com/18642838/170258153-5c629532-9c2f-49d5-b819-43787e52b750.png">
+* First inside MainScreen.dart we will use MediaQuery to get the device highet, width and orientation inside the build function
 
-then add this assets folder in pubspec.yamel
+    ```
+        double width = MediaQuery.of(context).size.width;
+        double height = MediaQuery.of(context).size.height;
+        bool isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    ```
+* Next, we will add a body to the Scaffold widget and return a container that have our content
 
-```
-  assets:
-    - assets/images/
-```
+* then we will add the background images in a decoration att of the countainer. 
 
-### 4- Create the AppBar
-create a statless widget that implement PreferredSizeWidget and return an appBar. 
+    ```
+    decoration: BoxDecoration(
+                image: DecorationImage(
+                    colorFilter: ColorFilter.mode(
+                        Theme.of(context).backgroundColor.withOpacity(0.9),
+                        BlendMode.darken),
+                    image: AssetImage(isPortrait
+                        ? "assets/images/backPortrait.png"
+                        : "assets/images/backLandscape.png"),
+                    fit: BoxFit.cover))
+    ```
 
-### 5- Adding the app bar 
-
-Return a Scaffold in the main screen and return The APPBar we created. 
+* then we will add a column that will have our logo and the text of our home screen. 
