@@ -73,7 +73,7 @@ class MyApp extends ConsumerWidget {
    bool darkMode = ref.watch(darkModeStateManagerProvider);
 ```
 
-### 6- adding dark theme to Material app 
+### 7- adding dark theme to Material app 
 
 ```
       darkTheme: ThemeData(
@@ -89,7 +89,7 @@ class MyApp extends ConsumerWidget {
 ```
 
 
-### 7- Make FlashCards Appbar extend ConsumerWidget 
+### 8- Make FlashCards Appbar extend ConsumerWidget 
 
 ```
 class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
@@ -99,7 +99,7 @@ class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
 
 
-### 8- switch the state when we click the button in the app bar
+### 9- switch the state when we click the button in the app bar
 
 ```
     onSelected: (String value) => value == 'Impressum'
