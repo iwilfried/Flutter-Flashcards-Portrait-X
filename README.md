@@ -1,42 +1,49 @@
-# Chapter 4: Get data from the JSON
+# Chapter 5: create categories screen 
 
 ## Steps: 
 
-### 1- Create the JSON file
+### 1- Create categories screen class & home screen class under screens 
 first we will create slides.json file under the assets folder and add the data to it. 
 
-<img width="401" alt="image" src="https://user-images.githubusercontent.com/18642838/170269429-8d160f21-a968-42c0-8868-3308c41afa4a.png">
+<img width="409" alt="image" src="https://user-images.githubusercontent.com/18642838/170304122-a0990134-889d-43f7-b402-d3676bdadf86.png">
 
-### 2- create classes to hold JSON data
-create models folder under lib
-and inside that folder we will create four classes 
-1- category \
-2- glossry \
-3- slide \
-4- tags 
-
-<img width="404" alt="image" src="https://user-images.githubusercontent.com/18642838/170297848-688f5016-31e4-4a3f-aab3-374f5b755c36.png">
-
-In each class we will have:\
-1- the variables \
-2- the constructor \
-3- a from json junction to decode the json file
-
-### 3- create loadData func in mainscreen to get the data from the JSON 
-
-inside the load data we will:
-* first load the slides.json file as string 
-* then we decode the json 
-* then we will create a categories List variable to hold the categories from the json file
-* and a lesson String variable to hold the lesson name from json file
-* and a title String variable to hold the title name from the json file.
-
+### 2- Creating Home screen
+* create a statful widget inside the class 
+* make the class accept two variables 1- title 2- start lesson function 
+* copy the content inside the expanded widget from main screen and return it in home screen
+* pass the start lesson funtion to the arrow button at the bottom 
 ```
-  List<Category> categories = [];
-  String title = "";
-  String lesson = "";
+    onPressed: () => widget.startLesson(),
+````
 
-  Future<void> loadData() async {
+### 3- Creating categories widget 
+* create a statful widget inside the class 
+* make the class accept three variables 1- categories list 2- title 3- lesson 
+* create listview builder to make a list of ExpansionTile for each category 
+
+### 4- create a list variable to hold the home & categoris screen in main screen
+
+* create the variable in the main screen 
+    ```
+    List<Widget> list = [];
+    ````
+* create intiate the variable inside the init state 
+    ```
+     @override
+  void initState() {
+    loadData();
+    setState(() {
+      list = [
+        HomeScreen(startLesson: startLesson, title: title),
+        CategoriesScreen(categories: categories, title: title, lesson: lesson),
+      ];
+    });
+    super.initState();
+  }
+    ````
+* update the passed data to the screen in load screen function 
+    ```
+      Future<void> loadData() async {
     String data =
         await DefaultAssetBundle.of(context).loadString("assets/slides.json");
     final jsonResult = jsonDecode(data); //latest Dart
@@ -46,52 +53,38 @@ inside the load data we will:
       lesson = jsonResult['lesson'];
       categories =
           List<Category>.from(catJson.map((e) => Category.fromJson(e)));
+      list = [
+        HomeScreen(startLesson: startLesson, title: title),
+        CategoriesScreen(categories: categories, title: title, lesson: lesson),
+      ];
     });
   }
-  ```
+    ````
+### 5- create start lesson funtion inside mainscreen 
+```
+  void startLesson() {
+    pageControllerH.nextPage(
+        duration: const Duration(milliseconds: 3), curve: Curves.fastOutSlowIn);
+  }
+````
 
-### 4- call the loadData function in the instate method 
+### 6- create a pageviewer in main screen 
+Inside main screen we will create a page viewer to switch between the home screen and the categories screen. 
 
 ```
-    @override
-    void initState() {
-        loadData();
-        super.initState();
-    }
-```
-
-### 5- replace the hardcoded title with the variable we got form the json 
-
-```
-    AutoSizeText(
-    '$title FlashCards',
-    maxLines: 4,
-    textAlign: TextAlign.center,
-    style: GoogleFonts.oswald(
-        textStyle: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 30,
-    )),
+    child: PageView(
+    onPageChanged: (int newpage) {
+        setState(() {
+        page = newpage;
+        });
+    },
+    scrollDirection: Axis.horizontal,
+    controller: pageControllerH,
+    scrollBehavior:
+        ScrollConfiguration.of(context).copyWith(dragDevices: {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+    }),
+    children: list,
     ),
-```
-
-### 6- pass the title variable to the footer widget
-
-in the main screen:
-```
-    FlashCardsFooter(title: title),
-```
-and inside the footer widget: 
-```
-  final String title;
-  const FlashCardsFooter({Key? key, required this.title}) : super(key: key);
-```
-```
-    child: AutoSizeText(title,
-        maxLines: 1,
-        style: GoogleFonts.robotoSlab(
-            textStyle: GoogleFonts.robotoSlab(
-                textStyle: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.w500)),
-        )),
-```
+````
