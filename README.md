@@ -35,3 +35,25 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+# Chapter 0
+
+## steps: 
+
+### 1- create flutter application
+
+```
+flutter create flutter_flashcards_portrait
+```
+
+### 2- create main screen class
+
+create mainscreen.dart under lib/screens
+then create an empty statful widget inside.
+
+<img width="340" alt="image" src="https://user-images.githubusercontent.com/18642838/170252134-e10271ff-cdab-483a-a581-eeff29bf4a25.png">
+
+### 3- clean main.dart 
+
+delete all the unnecessary code inside main.dart then 
