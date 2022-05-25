@@ -154,7 +154,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
             ),
-            FlashCardsFooter(),
+            FlashCardsFooter(title: title),
           ],
         ),
       ),

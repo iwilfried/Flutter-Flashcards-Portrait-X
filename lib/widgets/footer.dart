@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FlashCardsFooter extends StatelessWidget {
-  const FlashCardsFooter({Key? key}) : super(key: key);
+  final String title;
+  const FlashCardsFooter({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class FlashCardsFooter extends StatelessWidget {
       height: 45,
       child: Align(
         alignment: Alignment.centerLeft,
-        child: AutoSizeText("General Data Protection Regulation(GDPR)",
+        child: AutoSizeText(title,
             maxLines: 1,
             style: GoogleFonts.robotoSlab(
               textStyle: GoogleFonts.robotoSlab(
