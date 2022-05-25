@@ -1,36 +1,20 @@
-# Chapter 2: Create Home Screen
+# Chapter 3: Create Footer
 
 ## Steps: 
 
-### 1- add the new assets 
-add the background images and the logo to the images folder assets/images
-
-<img width="331" alt="image" src="https://user-images.githubusercontent.com/18642838/170261690-252d8582-ccde-477f-a951-b0b5d1753127.png">
-
-### 2- create home screen
+### 1- Create Foorter file
+Create a new file under widgets and call it footer.dart 
+<img width="267" alt="image" src="https://user-images.githubusercontent.com/18642838/170265843-1a26e89b-44c6-464b-9cd7-7f3086c0815e.png">
 
 
-* First inside MainScreen.dart we will use MediaQuery to get the device highet, width and orientation inside the build function
+### 2- create the footer 
+Inside footer.dart create stateless widget that return a Container with our footer content
 
-    ```
-        double width = MediaQuery.of(context).size.width;
-        double height = MediaQuery.of(context).size.height;
-        bool isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    ```
-* Next, we will add a body to the Scaffold widget and return a container that have our content
+### 3- add footer to mainscreen 
 
-* then we will add the background images in a decoration att of the countainer. 
+* first we will create a column and Add our homeScreen Code inside an Expanded widget to take all the empty space
 
-    ```
-    decoration: BoxDecoration(
-                image: DecorationImage(
-                    colorFilter: ColorFilter.mode(
-                        Theme.of(context).backgroundColor.withOpacity(0.9),
-                        BlendMode.darken),
-                    image: AssetImage(isPortrait
-                        ? "assets/images/backPortrait.png"
-                        : "assets/images/backLandscape.png"),
-                    fit: BoxFit.cover))
-    ```
-
-* then we will add a column that will have our logo and the text of our home screen. 
+* at the end of this column we will add our footer after the Expanded widget.
+```
+ FlashCardsFooter(),
+```

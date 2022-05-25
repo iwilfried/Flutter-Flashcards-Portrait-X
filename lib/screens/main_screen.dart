@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/appbar.dart';
+import '../widgets/footer.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -127,25 +128,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(
-                left: 20,
-              ),
-              color: Colors.blue,
-              width: double.infinity,
-              height: 45,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: AutoSizeText("General Data Protection Regulation(GDPR)",
-                    maxLines: 1,
-                    style: GoogleFonts.robotoSlab(
-                      textStyle: GoogleFonts.robotoSlab(
-                          textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500)),
-                    )),
-              ),
-            ),
+            FlashCardsFooter(),
           ],
         ),
       ),
