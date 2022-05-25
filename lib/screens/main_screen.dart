@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../widgets/appbar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -181,6 +182,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
       ),
+      appBar: FlashCardsAppBar(),
     );
   }
 }

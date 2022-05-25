@@ -1,16 +1,34 @@
-# flash_cards_portrait_app
+# Chapter 1: Create App bar for
 
-A new Flutter project.
+## Steps: 
 
-## Getting Started
+### 1- create an AppBar Widget
+create appbar widget under lib/widgets folder 
 
-This project is a starting point for a Flutter application.
+<img width="341" alt="image" src="https://user-images.githubusercontent.com/18642838/170257143-4d1f1cf4-5e39-49d6-a388-d73b305652b2.png">
+<br/><br/>
 
-A few resources to get you started if this is your first Flutter project:
+### 2- add the libraries we are going to use to pubspec.yaml 
+```
+  google_fonts: ^2.3.2
+  auto_size_text: ^3.0.0
+```
+### 3- adding assets 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+create an assets folder in the root folder then create an images folder inside it and add the image there. 
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img width="341" alt="image" src="https://user-images.githubusercontent.com/18642838/170258153-5c629532-9c2f-49d5-b819-43787e52b750.png">
+
+then add this assets folder in pubspec.yamel
+
+```
+  assets:
+    - assets/images/
+```
+
+### 4- Create the AppBar
+create a statless widget that implement PreferredSizeWidget and return an appBar. 
+
+### 5- Adding the app bar 
+
+Return a Scaffold in the main screen and return The APPBar we created. 
