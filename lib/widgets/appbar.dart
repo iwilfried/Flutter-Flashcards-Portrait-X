@@ -1,10 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FlashCardsAppBar extends StatelessWidget implements PreferredSizeWidget {
+import '../state_mangment/dark_mode_state_manager.dart';
+
+class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AppBar(
       shape: const Border(top: BorderSide(color: Colors.green, width: 3)),
       backgroundColor: Theme.of(context).cardColor,
@@ -49,10 +52,18 @@ class FlashCardsAppBar extends StatelessWidget implements PreferredSizeWidget {
                       Icons.more_vert,
                       color: Theme.of(context).primaryColor,
                     ),
-                    onSelected: (String value) =>
-                        value == 'Impressum' ? {} : {},
+                    onSelected: (String value) => value == 'Impressum'
+                        ? {}
+                        : ref
+                            .read(darkModeStateManagerProvider.notifier)
+                            .switchDarkMode(),
                     itemBuilder: (BuildContext context) {
-                      return {'Dark mode', 'Impressum'}.map((String choice) {
+                      return {
+                        Theme.of(context).brightness == Brightness.light
+                            ? 'Dark mode'
+                            : 'Light mode',
+                        'Impressum'
+                      }.map((String choice) {
                         return PopupMenuItem<String>(
                           value: choice,
                           child: Text(choice),
