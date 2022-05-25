@@ -1,4 +1,4 @@
-# Chapter 1: Create App bar for
+# Chapter 1: Create App bar 
 
 ## Steps: 
 
