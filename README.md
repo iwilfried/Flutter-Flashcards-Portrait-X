@@ -149,20 +149,20 @@ and under it we will have the three navigation buttons.
   ```
 * create a widget layout which returns a pageviewer that navigate through the slides
 
-```
-            child: PageView(
-              onPageChanged: (int newpage) {
-                setState(() {
-                  page = newpage;
-                });
-              },
-              scrollDirection: Axis.horizontal,
-              controller: pageControllerH,
-              scrollBehavior:
-                  ScrollConfiguration.of(context).copyWith(dragDevices: {
-                PointerDeviceKind.touch,
-                PointerDeviceKind.mouse,
-              }),
-              children: list,
-            ),
-````
+  ```
+        child: PageView(
+          onPageChanged: (int newpage) {
+            setState(() {
+              page = newpage;
+            });
+          },
+          scrollDirection: Axis.horizontal,
+          controller: pageControllerH,
+          scrollBehavior:
+              ScrollConfiguration.of(context).copyWith(dragDevices: {
+            PointerDeviceKind.touch,
+            PointerDeviceKind.mouse,
+          }),
+          children: list,
+        ),
+  ````
