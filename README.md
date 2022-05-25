@@ -1,16 +1,20 @@
-# flash_cards_portrait_app
+# Chapter 3: Create Footer
 
-A new Flutter project.
+## Steps: 
 
-## Getting Started
+### 1- Create Foorter file
+Create a new file under widgets and call it footer.dart 
+<img width="267" alt="image" src="https://user-images.githubusercontent.com/18642838/170265843-1a26e89b-44c6-464b-9cd7-7f3086c0815e.png">
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+### 2- create the footer 
+Inside footer.dart create stateless widget that return a Container with our footer content
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### 3- add footer to mainscreen 
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* first we will create a column and Add our homeScreen Code inside an Expanded widget to take all the empty space
+
+* at the end of this column we will add our footer after the Expanded widget.
+```
+ FlashCardsFooter(),
+```
