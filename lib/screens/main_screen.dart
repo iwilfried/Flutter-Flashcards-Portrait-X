@@ -61,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlashCardsAppBar(),
+      appBar: FlashCardsAppBar(title: "Accelerated Learning"),
       body: Scaffold(
         body: Column(
           children: [

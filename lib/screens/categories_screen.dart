@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flash_cards_portrait_app/screens/slides_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -90,7 +91,13 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               borderRadius: BorderRadius.circular(1.0)),
                           padding: const EdgeInsets.all(10.0),
                         ),
-                        onPressed: () => {},
+                        onPressed: () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SlidesScreen(
+                                    category: widget.categories[index],
+                                  )),
+                        ),
                         child: Text('Start Studying',
                             style: GoogleFonts.robotoSlab(
                                 textStyle: const TextStyle(

@@ -3,9 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../screens/main_screen.dart';
 import '../state_mangment/dark_mode_state_manager.dart';
 
 class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  final bool isSlidesScreen;
+  final String title;
+  final int page;
+  final int listLength;
+  const FlashCardsAppBar({
+    Key? key,
+    this.isSlidesScreen = false,
+    this.title = "",
+    this.page = 0,
+    this.listLength = 0,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AppBar(
@@ -24,24 +37,84 @@ class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 30,
-                    child: Image.asset('assets/images/LogoMaster.png'),
+                  InkWell(
+                    onTap: () => !isSlidesScreen
+                        ? null
+                        : Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MainScreen()),
+                          ),
+                    child: SizedBox(
+                      height: 30,
+                      child: Image.asset('assets/images/LogoMaster.png'),
+                    ),
                   ),
                 ],
               ),
             ),
             Expanded(
-                flex: 2,
-                child: Center(
-                  child: AutoSizeText("Accelerated Learning",
-                      maxLines: 1,
-                      style: GoogleFonts.roboto(
-                          textStyle: TextStyle(
+              flex: 2,
+              child: !isSlidesScreen
+                  ? AutoSizeText(
+                      title,
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: TextStyle(
+                            fontSize: 22,
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.w300),
+                      ),
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AutoSizeText(
+                          '${page + 1}',
+                          style: GoogleFonts.robotoCondensed(
+                            textStyle: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 3,
+                        ),
+                        Text(
+                          '/',
+                          style: GoogleFonts.robotoCondensed(
+                            textStyle: TextStyle(
+                              fontSize: 16,
                               color: Theme.of(context).primaryColor,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w300))),
-                )),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 3,
+                        ),
+                        Text(
+                          '$listLength',
+                          style: GoogleFonts.robotoCondensed(
+                            textStyle: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.6)),
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
+            if (isSlidesScreen)
+              IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  onPressed: () => {},
+                  icon: Icon(
+                    Icons.collections_bookmark,
+                    color: Theme.of(context).primaryColor,
+                  )),
             Expanded(
               flex: 1,
               child: Row(
@@ -52,17 +125,24 @@ class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
                       Icons.more_vert,
                       color: Theme.of(context).primaryColor,
                     ),
-                    onSelected: (String value) => value == 'Impressum'
-                        ? {}
-                        : ref
-                            .read(darkModeStateManagerProvider.notifier)
-                            .switchDarkMode(),
+                    onSelected: (String value) => value == 'FlashDecks'
+                        ? Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MainScreen()),
+                          )
+                        : value == 'Impressum'
+                            ? {}
+                            : ref
+                                .read(darkModeStateManagerProvider.notifier)
+                                .switchDarkMode(),
                     itemBuilder: (BuildContext context) {
                       return {
                         Theme.of(context).brightness == Brightness.light
                             ? 'Dark mode'
                             : 'Light mode',
-                        'Impressum'
+                        if (isSlidesScreen) 'FlashDecks',
+                        'Impressum',
                       }.map((String choice) {
                         return PopupMenuItem<String>(
                           value: choice,

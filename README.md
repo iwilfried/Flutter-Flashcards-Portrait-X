@@ -1,121 +1,168 @@
-# Chapter 6: adding dark Mode 
+# Chapter 7: Creating Slides Screen
 
 ## Steps: 
 
-### 1- add the new lib to the pubspec.yamel 
-the first lib is riverpod for statemanagement 
-the second one is shared preferences to save the state when we close the app and open it again. 
+### 1- adding the required lib in pubspec.yaml
 ```
-  flutter_riverpod: ^1.0.4
-  shared_preferences: ^2.0.9
+  flip_card: ^0.6.0
+  styled_text: ^5.0.0+1
+  url_launcher: ^6.0.20
 ```
+### 2- create Slides Screen class and Slide widget class 
 
-### 2- create a dark mode managment class 
-create a new folder under lib and call it state_managment
-create a new file inside the folder and call it dark_mode_state_manager.dart 
+under Screens we will create a new file and call it Slides_screen.dart
+and under widget we will create a new file and call it slide_widget.dart
 
-<img width="411" alt="image" src="https://user-images.githubusercontent.com/18642838/170315889-f346ed06-f038-4dd5-b57e-35e8313b5892.png">
+<img width="347" alt="image" src="https://user-images.githubusercontent.com/18642838/170355160-7af5e13b-a43e-41f4-8c18-fbfde62c041d.png">
 
-### 3- create a StateNotifierProvider inside the class 
-
-inside the class we will create darkModeStateManagerProvider with type bool 
-
-```
-final darkModeStateManagerProvider =
-    StateNotifierProvider<DarkModeStateManager, bool>((ref) {
-  return DarkModeStateManager(ref.read);
-});
-```
-### 4- create the change notifier 
-and create a Dark mode class that extend State Notifier with the same type as the provider bool
-The class will have two functions 
-1- init to get the state if exsit from the shared prefrenses and update the state 
-
-```
-  void _init() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool darkMode = false;
-    var jsonData = prefs.getString('darkMode') ?? '';
-    if (jsonData != '') {
-      darkMode = json.decode(jsonData)['mode'];
-    }
-    state = darkMode;
-  }
-```
-2- switch dark mode funtion to switch the state when click the buttom from the app bar and save the last state to the shared pref 
-```
-  Future<void> switchDarkMode() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    state = !state;
-    prefs.setString('darkMode', jsonEncode({'mode': state}));
-    state = state;
-  }
-```
-
-### 5- adding the provier scope in the main.dart in main function
-
-```
-void main() {
-  runApp(
-    const ProviderScope(child: MyApp()),
-  );
-}
-```
-
-### 6- make MyApp class extend Consumer widget 
-we will make the my app class extend consumer widget so we will have the Ref variable which allow us to be able to read the data from any provider we will make. 
-and we will get the darkmode provider state to switch between the modes. 
-```
-class MyApp extends ConsumerWidget {
-  const MyApp({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-   bool darkMode = ref.watch(darkModeStateManagerProvider);
-```
-
-### 7- adding dark theme to Material app 
-
-```
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        backgroundColor: Colors.black,
-        primaryColor: Colors.white,
-        shadowColor: Colors.white24,
-        cardColor: Colors.black45,
-
-        /* dark theme settings */
-      ),
-      themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
-```
-
-
-### 8- Make FlashCards Appbar extend ConsumerWidget 
-
+### 3- update the appBar widget to fit in slides screen
+make the app bar widget accept four variables 
+title incase it's the main screen 
+page&title incase it's slides screen 
+and boolean isSlidesScreen 
 ```
 class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  final bool isSlidesScreen;
+  final String title;
+  final int page;
+  final int listLength;
+  const FlashCardsAppBar({
+    Key? key,
+    this.isSlidesScreen = false,
+    this.title = "",
+    this.page = 0,
+    this.listLength = 0,
+  }) : super(key: key);
+```
+update the widget to fit both screens. 
+
+### 4- update the footer widget to fit in slides screen
+make the footer widget accept two variables and replace the harded coded text with the variables. 
+```
+class FlashCardsFooter extends StatelessWidget {
+  final String title;
+  final String tail;
+  const FlashCardsFooter({Key? key, required this.title, this.tail = ""})
+      : super(key: key);
 ```
 
+### 5- create the Slide Widget under Slides
 
+* create a statefull widget that accept a slide as a parameter, three functions for navigation, category name and number of pages. 
 
-### 9- switch the state when we click the button in the app bar
+  ```
+  class SlideWidget extends StatefulWidget {
+  final Slide slide;
+  final String categoryName;
+  final int pages;
+  final Function nextPage;
+  final Function flip;
+  final Function previousPage;
+  const SlideWidget({
+    Key? key,
+    required this.slide,
+    required this.categoryName,
+    required this.pages,
+    required this.flip,
+    required this.nextPage,
+    required this.previousPage,
+  }) : super(key: key);
+  ```
+
+* create tags map and intiate it in the init state to pass it to the styled text widget
+
+  ```
+    Map<String, StyledTextTagBase> tags = {};
+  ```
+* Create the Slide layout which consist of a FlipCard widget the has the question at a side and the answer on the other side and can be fliped
+and under it we will have the three navigation buttons. 
+
+### 6- create Slides Screen 
+
+* create a statefull widget that accept a category as a parameter 
+  ```
+  class SlidesScreen extends StatefulWidget {
+    final Category category;
+    const SlidesScreen({Key? key, required this.category}) : super(key: key);
+
+    @override
+    State<SlidesScreen> createState() => _MainScreenState();
+  }
+  ```
+
+* create variables to hold the slides list, page number and isQuestion bool. 
+
+  ```
+    int page = 0;
+  bool isQuestion = true;
+  List<Widget> list = [];
+  late String categoryName;
+  late List<Slide> slides;
+
+  PageController pageControllerH = PageController();
+  ```
+* inside the init state we will initiate the variables we created and add the slides to the list
+
+  ```
+    @override
+  void initState() {
+    slides = widget.category.slides;
+    categoryName = widget.category.categoryName;
+    slides.forEach((newslide) {
+      list.add(SlideWidget(
+        slide: newslide,
+        categoryName: categoryName,
+        nextPage: nextPage,
+        flip: flip,
+        previousPage: previousPage,
+        pages: slides.length,
+      ));
+    });
+    super.initState();
+  }
+  ```
+* we will create the three functions for next, previous and flip for the three buttons
+
+  ```
+  void flip() {
+      setState(() {
+        isQuestion = !isQuestion;
+      });
+    }
+
+    void nextPage() {
+      if (page < list.length) {
+        pageControllerH.nextPage(
+            duration: const Duration(milliseconds: 3),
+            curve: Curves.fastOutSlowIn);
+      }
+    }
+
+    void previousPage() {
+      if (page > 0) {
+        pageControllerH.previousPage(
+            duration: const Duration(milliseconds: 3),
+            curve: Curves.fastOutSlowIn);
+      }
+    }
+
+  ```
+* create a widget layout which returns a pageviewer that navigate through the slides
 
 ```
-    onSelected: (String value) => value == 'Impressum'
-        ? {}
-        : ref
-            .read(darkModeStateManagerProvider.notifier)
-            .switchDarkMode(),
-```
-then change the work between the darkmode and lighmode 
-
-```
-                    itemBuilder: (BuildContext context) {
-                      return {
-                        Theme.of(context).brightness == Brightness.light
-                            ? 'Dark mode'
-                            : 'Light mode',
-                        'Impressum'
-                      }.map((String choice) {
+            child: PageView(
+              onPageChanged: (int newpage) {
+                setState(() {
+                  page = newpage;
+                });
+              },
+              scrollDirection: Axis.horizontal,
+              controller: pageControllerH,
+              scrollBehavior:
+                  ScrollConfiguration.of(context).copyWith(dragDevices: {
+                PointerDeviceKind.touch,
+                PointerDeviceKind.mouse,
+              }),
+              children: list,
+            ),
 ````
