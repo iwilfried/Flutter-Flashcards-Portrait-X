@@ -8,6 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/category.dart';
 import 'categories_screen.dart';
 import 'home_screen.dart';
+import '../widgets/appbar.dart';
+import '../widgets/footer.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -63,68 +65,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        shape: const Border(top: BorderSide(color: Colors.green, width: 3)),
-        backgroundColor: Theme.of(context).cardColor,
-        centerTitle: false,
-        titleSpacing: 0,
-        shadowColor: Theme.of(context).shadowColor,
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 30,
-                      child: Image.asset('assets/images/LogoMaster.png'),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                  flex: 2,
-                  child: Center(
-                    child: Text("Accelerated Learning",
-                        maxLines: 1,
-                        style: GoogleFonts.roboto(
-                            textStyle: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 24,
-                                fontWeight: FontWeight.w300))),
-                  )),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    PopupMenuButton<String>(
-                      child: Icon(
-                        Icons.more_vert,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      onSelected: (String value) =>
-                          value == 'Impressum' ? {} : {},
-                      itemBuilder: (BuildContext context) {
-                        return {'Dark mode', 'Impressum'}.map((String choice) {
-                          return PopupMenuItem<String>(
-                            value: choice,
-                            child: Text(choice),
-                          );
-                        }).toList();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: FlashCardsAppBar(),
       body: Scaffold(
         body: Column(
           children: [
@@ -145,25 +86,7 @@ class _MainScreenState extends State<MainScreen> {
                 children: list,
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(
-                left: 20,
-              ),
-              color: Colors.blue,
-              width: double.infinity,
-              height: 45,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: AutoSizeText(title,
-                    maxLines: 1,
-                    style: GoogleFonts.robotoSlab(
-                      textStyle: GoogleFonts.robotoSlab(
-                          textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500)),
-                    )),
-              ),
-            ),
+            FlashCardsFooter(title: title),
           ],
         ),
       ),
