@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/slide.dart';
+import '../screens/learn_more.dart';
 
 class SlideWidget extends StatefulWidget {
   final Slide slide;
@@ -163,7 +164,14 @@ class _SlideOneState extends State<SlideWidget> {
                                 fontSize: 19,
                               )),
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () => {},
+                                ..onTap = () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LearnMore(
+                                              categoryName: widget.categoryName,
+                                              tags: tags,
+                                              text: widget.slide.learnMore)),
+                                    ),
                             ),
                           ),
                         ],

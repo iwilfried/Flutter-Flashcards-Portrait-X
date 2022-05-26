@@ -1,168 +1,83 @@
-# Chapter 7: Creating Slides Screen
+# Chapter 8: Creating Learn more screen
 
 ## Steps: 
 
-### 1- adding the required lib in pubspec.yaml
-```
-  flip_card: ^0.6.0
-  styled_text: ^5.0.0+1
-  url_launcher: ^6.0.20
-```
-### 2- create Slides Screen class and Slide widget class 
+### 1- create a new file under lib/screens and name it learn_more.dart 
 
-under Screens we will create a new file and call it Slides_screen.dart
-and under widget we will create a new file and call it slide_widget.dart
+<img width="350" alt="image" src="https://user-images.githubusercontent.com/18642838/170455920-1516b3b8-cb7b-4e2d-8f72-b189377b3032.png">
 
-<img width="347" alt="image" src="https://user-images.githubusercontent.com/18642838/170355160-7af5e13b-a43e-41f4-8c18-fbfde62c041d.png">
 
-### 3- update the appBar widget to fit in slides screen
-make the app bar widget accept four variables 
-title incase it's the main screen 
-page&title incase it's slides screen 
-and boolean isSlidesScreen 
-```
-class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  final bool isSlidesScreen;
-  final String title;
-  final int page;
-  final int listLength;
-  const FlashCardsAppBar({
-    Key? key,
-    this.isSlidesScreen = false,
-    this.title = "",
-    this.page = 0,
-    this.listLength = 0,
-  }) : super(key: key);
-```
-update the widget to fit both screens. 
+### 2- create learn more screen 
+inside learn_more.dart create a new stateless class and name it LearnMore which accept three parameters
 
-### 4- update the footer widget to fit in slides screen
-make the footer widget accept two variables and replace the harded coded text with the variables. 
 ```
-class FlashCardsFooter extends StatelessWidget {
-  final String title;
-  final String tail;
-  const FlashCardsFooter({Key? key, required this.title, this.tail = ""})
+class LearnMore extends StatelessWidget {
+  final String text;
+  final String categoryName;
+  final Map<String, StyledTextTagBase> tags;
+  const LearnMore(
+      {Key? key,
+      required this.text,
+      required this.tags,
+      required this.categoryName})
       : super(key: key);
 ```
 
-### 5- create the Slide Widget under Slides
+the screen layout will return a text widget wrapped with a single child scroll view. 
 
-* create a statefull widget that accept a slide as a parameter, three functions for navigation, category name and number of pages. 
+```
+    return Scaffold(
+        appBar: FlashCardsAppBar(title: "Learn more..."),
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: StyledText(
+                      text: text,
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 19,
+                          height: 1.7,
+                        ),
+                      ),
+                      tags: tags,
+                    )),
+              ),
+            ),
+            FlashCardsFooter(title: categoryName)
+          ],
+        ));
+```
+### 3- update appBar widget to fit the new screen 
+```
+  if (title != "Learn more...")
+    InkWell(
+      onTap: () => title.isNotEmpty
+          ? null
+          : Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const MainScreen()),
+            ),
+      child: SizedBox(
+        height: 30,
+        child: Image.asset('assets/images/LogoMaster.png'),
+      ),
+    ),
+```
+### 4- navigate to LearnMore screen in the slide widget
+```
+  ..onTap = () => Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LearnMore(
+                categoryName: widget.categoryName,
+                tags: tags,
+                text: widget.slide.learnMore)),
+      ),
+```
 
-  ```
-  class SlideWidget extends StatefulWidget {
-  final Slide slide;
-  final String categoryName;
-  final int pages;
-  final Function nextPage;
-  final Function flip;
-  final Function previousPage;
-  const SlideWidget({
-    Key? key,
-    required this.slide,
-    required this.categoryName,
-    required this.pages,
-    required this.flip,
-    required this.nextPage,
-    required this.previousPage,
-  }) : super(key: key);
-  ```
-
-* create tags map and intiate it in the init state to pass it to the styled text widget
-
-  ```
-    Map<String, StyledTextTagBase> tags = {};
-  ```
-* Create the Slide layout which consist of a FlipCard widget the has the question at a side and the answer on the other side and can be fliped
-and under it we will have the three navigation buttons. 
-
-### 6- create Slides Screen 
-
-* create a statefull widget that accept a category as a parameter 
-  ```
-  class SlidesScreen extends StatefulWidget {
-    final Category category;
-    const SlidesScreen({Key? key, required this.category}) : super(key: key);
-
-    @override
-    State<SlidesScreen> createState() => _MainScreenState();
-  }
-  ```
-
-* create variables to hold the slides list, page number and isQuestion bool. 
-
-  ```
-    int page = 0;
-  bool isQuestion = true;
-  List<Widget> list = [];
-  late String categoryName;
-  late List<Slide> slides;
-
-  PageController pageControllerH = PageController();
-  ```
-* inside the init state we will initiate the variables we created and add the slides to the list
-
-  ```
-    @override
-  void initState() {
-    slides = widget.category.slides;
-    categoryName = widget.category.categoryName;
-    slides.forEach((newslide) {
-      list.add(SlideWidget(
-        slide: newslide,
-        categoryName: categoryName,
-        nextPage: nextPage,
-        flip: flip,
-        previousPage: previousPage,
-        pages: slides.length,
-      ));
-    });
-    super.initState();
-  }
-  ```
-* we will create the three functions for next, previous and flip for the three buttons
-
-  ```
-  void flip() {
-      setState(() {
-        isQuestion = !isQuestion;
-      });
-    }
-
-    void nextPage() {
-      if (page < list.length) {
-        pageControllerH.nextPage(
-            duration: const Duration(milliseconds: 3),
-            curve: Curves.fastOutSlowIn);
-      }
-    }
-
-    void previousPage() {
-      if (page > 0) {
-        pageControllerH.previousPage(
-            duration: const Duration(milliseconds: 3),
-            curve: Curves.fastOutSlowIn);
-      }
-    }
-
-  ```
-* create a widget layout which returns a pageviewer that navigate through the slides
-
-  ```
-        child: PageView(
-          onPageChanged: (int newpage) {
-            setState(() {
-              page = newpage;
-            });
-          },
-          scrollDirection: Axis.horizontal,
-          controller: pageControllerH,
-          scrollBehavior:
-              ScrollConfiguration.of(context).copyWith(dragDevices: {
-            PointerDeviceKind.touch,
-            PointerDeviceKind.mouse,
-          }),
-          children: list,
-        ),
-  ````

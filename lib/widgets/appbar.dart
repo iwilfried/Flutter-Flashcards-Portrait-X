@@ -7,13 +7,11 @@ import '../screens/main_screen.dart';
 import '../state_mangment/dark_mode_state_manager.dart';
 
 class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  final bool isSlidesScreen;
   final String title;
   final int page;
   final int listLength;
   const FlashCardsAppBar({
     Key? key,
-    this.isSlidesScreen = false,
     this.title = "",
     this.page = 0,
     this.listLength = 0,
@@ -27,6 +25,9 @@ class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
       centerTitle: false,
       titleSpacing: 0,
       shadowColor: Theme.of(context).shadowColor,
+      iconTheme: IconThemeData(
+        color: Theme.of(context).primaryColor, //change your color here
+      ),
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
@@ -37,25 +38,26 @@ class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  InkWell(
-                    onTap: () => !isSlidesScreen
-                        ? null
-                        : Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MainScreen()),
-                          ),
-                    child: SizedBox(
-                      height: 30,
-                      child: Image.asset('assets/images/LogoMaster.png'),
+                  if (title != "Learn more...")
+                    InkWell(
+                      onTap: () => title.isNotEmpty
+                          ? null
+                          : Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MainScreen()),
+                            ),
+                      child: SizedBox(
+                        height: 30,
+                        child: Image.asset('assets/images/LogoMaster.png'),
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
             Expanded(
               flex: 2,
-              child: !isSlidesScreen
+              child: title.isNotEmpty
                   ? AutoSizeText(
                       title,
                       style: GoogleFonts.robotoCondensed(
@@ -106,7 +108,7 @@ class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
                       ],
                     ),
             ),
-            if (isSlidesScreen)
+            if (title.isEmpty)
               IconButton(
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
@@ -141,7 +143,7 @@ class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
                         Theme.of(context).brightness == Brightness.light
                             ? 'Dark mode'
                             : 'Light mode',
-                        if (isSlidesScreen) 'FlashDecks',
+                        if (title.isEmpty) 'FlashDecks',
                         'Impressum',
                       }.map((String choice) {
                         return PopupMenuItem<String>(
