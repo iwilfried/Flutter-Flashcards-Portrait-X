@@ -1,36 +1,61 @@
-# Chapter 9: Creating Impressum Screen
+# Chapter 10: Creat glossries Screen
 
 ## Steps: 
 
-### 1- create a new file under lib/screens and name it impressum.dart
+### 1- create a new file under lib/screens and name it glossries_screen.dart
 
-<img width="347" alt="image" src="https://user-images.githubusercontent.com/18642838/170459078-2425c507-5cef-4f77-8007-ca9d424594b6.png">
+<img width="340" alt="image" src="https://user-images.githubusercontent.com/18642838/170464213-f5607dac-aa04-4c2c-873e-405f9095dca7.png">
 
 
-### 2- create Impressume screen 
-inside impressum.dart create a new stateless class and name it Impressum with no parameters and return a column of the text content. 
-
-### 3- update app bar widget to fit the screen 
+### 2- create a stateless widget inside the file the accept a list of glossries as a parameter 
 
 ```
-itemBuilder: (BuildContext context) {
-      return {
-        Theme.of(context).brightness == Brightness.light
-            ? 'Dark mode'
-            : 'Light mode',
-        if (title.isEmpty) 'FlashDecks',
-        if (title != "Impressum") 'Impressum',
-      }
+class GlossariesScreen extends StatefulWidget {
+  final List<Glossry> glossries;
+  const GlossariesScreen({Key? key, required this.glossries}) : super(key: key);
 ```
+### 3- the screen layout will return a list of ExpansionTile that show the glossries.
 
-### 4- navigate to the Impressum screen from the app bar 
+### 4- update the appBar to accept a list of glossries as a paramter 
 
 ```
-  : value == 'Impressum'
-        ? Navigator.push(
-            context,
+class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  final bool showLogo;
+  final String title;
+  final int page;
+  final int listLength;
+  final List<Glossry> glossries;
+  const FlashCardsAppBar({
+    Key? key,
+    this.showLogo = true,
+    this.glossries = const [],
+    this.title = "",
+    this.page = 0,
+    this.listLength = 0,
+  }) : super(key: key);
+```
+### 5- pass the glossries list to the appBar in the slides screen 
+```
+  appBar: FlashCardsAppBar(
+    page: page,
+    listLength: list.length,
+    glossries: widget.category.glossries,
+  ),
+```
+### 6- navigate to the glossries screen from the app bar 
+
+```
+  IconButton(
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints(),
+      onPressed: () => Navigator.of(context).push(
             MaterialPageRoute(
-                builder: (context) =>
-                    const ImpressumScreen()),
-          )
-````
+              builder: (context) =>
+                  GlossariesScreen(glossries: glossries),
+            ),
+          ),
+      icon: Icon(
+        Icons.collections_bookmark,
+        color: Theme.of(context).primaryColor,
+      )),
+```

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../models/glossry.dart';
+import '../screens/glossries_screen.dart';
 import '../screens/impressum.dart';
 import '../screens/main_screen.dart';
 import '../state_mangment/dark_mode_state_manager.dart';
@@ -12,9 +14,11 @@ class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
   final int page;
   final int listLength;
+  final List<Glossry> glossries;
   const FlashCardsAppBar({
     Key? key,
     this.showLogo = true,
+    this.glossries = const [],
     this.title = "",
     this.page = 0,
     this.listLength = 0,
@@ -115,7 +119,12 @@ class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
               IconButton(
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
-                  onPressed: () => {},
+                  onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              GlossariesScreen(glossries: glossries),
+                        ),
+                      ),
                   icon: Icon(
                     Icons.collections_bookmark,
                     color: Theme.of(context).primaryColor,
