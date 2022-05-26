@@ -1,98 +1,36 @@
-# Chapter 8: Creating Learn more screen
+# Chapter 9: Creating Impressum Screen
 
 ## Steps: 
 
-### 1- create a new file under lib/screens and name it learn_more.dart 
+### 1- create a new file under lib/screens and name it impressum.dart
 
-<img width="350" alt="image" src="https://user-images.githubusercontent.com/18642838/170455920-1516b3b8-cb7b-4e2d-8f72-b189377b3032.png">
+<img width="347" alt="image" src="https://user-images.githubusercontent.com/18642838/170459078-2425c507-5cef-4f77-8007-ca9d424594b6.png">
 
 
-### 2- create learn more screen 
-inside learn_more.dart create a new stateless class and name it LearnMore which accept three parameters
+### 2- create Impressume screen 
+inside impressum.dart create a new stateless class and name it Impressum with no parameters and return a column of the text content. 
 
-```
-class LearnMore extends StatelessWidget {
-  final String text;
-  final String categoryName;
-  final Map<String, StyledTextTagBase> tags;
-  const LearnMore(
-      {Key? key,
-      required this.text,
-      required this.tags,
-      required this.categoryName})
-      : super(key: key);
-```
-
-the screen layout will return a text widget wrapped with a single child scroll view. 
+### 3- update app bar widget to fit the screen 
 
 ```
-    return Scaffold(
-        appBar: FlashCardsAppBar(title: "Learn more..."),
-        body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: StyledText(
-                      text: text,
-                      style: GoogleFonts.robotoCondensed(
-                        textStyle: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 19,
-                          height: 1.7,
-                        ),
-                      ),
-                      tags: tags,
-                    )),
-              ),
-            ),
-            FlashCardsFooter(title: categoryName)
-          ],
-        ));
-```
-### 3- update appBar widget to fit the new screen 
-```
-class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  final bool showLogo;
-  final String title;
-  final int page;
-  final int listLength;
-  const FlashCardsAppBar({
-    Key? key,
-    this.showLogo = true,
-    this.title = "",
-    this.page = 0,
-    this.listLength = 0,
-  }) : super(key: key);
+itemBuilder: (BuildContext context) {
+      return {
+        Theme.of(context).brightness == Brightness.light
+            ? 'Dark mode'
+            : 'Light mode',
+        if (title.isEmpty) 'FlashDecks',
+        if (title != "Impressum") 'Impressum',
+      }
 ```
 
-```
-  if (showLogo)
-    InkWell(
-      onTap: () => title.isNotEmpty
-          ? null
-          : Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const MainScreen()),
-            ),
-      child: SizedBox(
-        height: 30,
-        child: Image.asset('assets/images/LogoMaster.png'),
-      ),
-    ),
-```
-### 4- navigate to LearnMore screen in the slide widget
-```
-  ..onTap = () => Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => LearnMore(
-                categoryName: widget.categoryName,
-                tags: tags,
-                text: widget.slide.learnMore)),
-      ),
-```
+### 4- navigate to the Impressum screen from the app bar 
 
+```
+  : value == 'Impressum'
+        ? Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    const ImpressumScreen()),
+          )
+````
