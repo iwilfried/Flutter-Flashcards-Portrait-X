@@ -18,7 +18,7 @@ class LearnMore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: FlashCardsAppBar(title: "Learn more..."),
+        appBar: FlashCardsAppBar(title: "Learn more...", showLogo: false),
         body: Column(
           children: [
             Expanded(

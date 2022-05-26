@@ -7,11 +7,13 @@ import '../screens/main_screen.dart';
 import '../state_mangment/dark_mode_state_manager.dart';
 
 class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  final bool showLogo;
   final String title;
   final int page;
   final int listLength;
   const FlashCardsAppBar({
     Key? key,
+    this.showLogo = true,
     this.title = "",
     this.page = 0,
     this.listLength = 0,
@@ -38,7 +40,7 @@ class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  if (title != "Learn more...")
+                  if (showLogo)
                     InkWell(
                       onTap: () => title.isNotEmpty
                           ? null

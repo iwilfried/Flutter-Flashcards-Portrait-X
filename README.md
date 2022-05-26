@@ -54,7 +54,22 @@ the screen layout will return a text widget wrapped with a single child scroll v
 ```
 ### 3- update appBar widget to fit the new screen 
 ```
-  if (title != "Learn more...")
+class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  final bool showLogo;
+  final String title;
+  final int page;
+  final int listLength;
+  const FlashCardsAppBar({
+    Key? key,
+    this.showLogo = true,
+    this.title = "",
+    this.page = 0,
+    this.listLength = 0,
+  }) : super(key: key);
+```
+
+```
+  if (showLogo)
     InkWell(
       onTap: () => title.isNotEmpty
           ? null
