@@ -10,20 +10,9 @@
 ### 2- create Impressume screen 
 inside impressum.dart create a new stateless class and name it Impressum with no parameters and return a column of the text content. 
 
-### 3- update app bar widget to fit the screen 
 
-```
-itemBuilder: (BuildContext context) {
-      return {
-        Theme.of(context).brightness == Brightness.light
-            ? 'Dark mode'
-            : 'Light mode',
-        if (title.isEmpty) 'FlashDecks',
-        if (title != "Impressum") 'Impressum',
-      }
-```
 
-### 4- navigate to the Impressum screen from the app bar 
+### 3- navigate to the Impressum screen from the Mainscreen & Slides screen appbar
 
 ```
   : value == 'Impressum'

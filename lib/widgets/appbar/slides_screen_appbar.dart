@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../screens/impressum.dart';
 import '../../screens/main_screen.dart';
 import '../../state_mangment/dark_mode_state_manager.dart';
 import 'appbar.dart';
@@ -103,7 +104,11 @@ class SlidesScreenAppbar extends ConsumerWidget implements PreferredSizeWidget {
                           builder: (context) => const MainScreen()),
                     )
                   : value == 'Impressum'
-                      ? {}
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ImpressumScreen()),
+                        )
                       : ref
                           .read(darkModeStateManagerProvider.notifier)
                           .switchDarkMode(),
