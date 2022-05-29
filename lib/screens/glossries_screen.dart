@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 import '../models/glossry.dart';
-import '../widgets/appbar.dart';
+import '../widgets/appbar/secondry_screens_appbar.dart';
 
 class GlossariesScreen extends StatefulWidget {
   final List<Glossry> glossries;
@@ -16,7 +16,7 @@ class _GlossariesScreenState extends State<GlossariesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlashCardsAppBar(showLogo: false, title: "Glossaries"),
+      appBar: SecondryScreensAppbar(title: "Glossaries"),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(

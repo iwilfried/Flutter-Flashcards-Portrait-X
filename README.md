@@ -4,10 +4,10 @@
 
 ### 1- create a new file under lib/screens and name it glossries_screen.dart
 
-<img width="340" alt="image" src="https://user-images.githubusercontent.com/18642838/170464213-f5607dac-aa04-4c2c-873e-405f9095dca7.png">
+<img width="339" alt="image" src="https://user-images.githubusercontent.com/18642838/170882161-45a72ed8-7614-4600-acd9-33a546651358.png">
 
 
-### 2- create a stateless widget inside the file the accept a list of glossries as a parameter 
+### 2- create a stateless widget inside the file that accept a list of glossries as a parameter 
 
 ```
 class GlossariesScreen extends StatefulWidget {
@@ -16,33 +16,30 @@ class GlossariesScreen extends StatefulWidget {
 ```
 ### 3- the screen layout will return a list of ExpansionTile that show the glossries.
 
-### 4- update the appBar to accept a list of glossries as a paramter 
+### 4- update the SlidesScreenAppbar to accept a list of glossries as a paramter 
 
 ```
-class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  final bool showLogo;
-  final String title;
+class SlidesScreenAppbar extends ConsumerWidget implements PreferredSizeWidget {
   final int page;
   final int listLength;
   final List<Glossry> glossries;
-  const FlashCardsAppBar({
+  const SlidesScreenAppbar({
     Key? key,
-    this.showLogo = true,
-    this.glossries = const [],
-    this.title = "",
     this.page = 0,
     this.listLength = 0,
+    this.glossries = const [],
   }) : super(key: key);
 ```
-### 5- pass the glossries list to the appBar in the slides screen 
+### 5- pass the glossries list to SlidesScreen appBar in the slides screen 
 ```
-  appBar: FlashCardsAppBar(
-    page: page,
-    listLength: list.length,
-    glossries: widget.category.glossries,
-  ),
+    return Scaffold(
+      appBar: SlidesScreenAppbar(
+        page: page,
+        listLength: list.length,
+        glossries: widget.category.glossries,
+      ),
 ```
-### 6- navigate to the glossries screen from the app bar 
+### 6- navigate to the glossries screen from the SlidesScreenbar 
 
 ```
   IconButton(

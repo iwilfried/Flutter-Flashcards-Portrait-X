@@ -70,7 +70,11 @@ class _MainScreenState extends State<SlidesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SlidesScreenAppbar(page: page, listLength: list.length),
+      appBar: SlidesScreenAppbar(
+        page: page,
+        listLength: list.length,
+        glossries: widget.category.glossries,
+      ),
       body: Column(
         children: [
           Expanded(
