@@ -4,7 +4,7 @@
 
 ### 1- create a new file under lib/screens and name it learn_more.dart 
 
-<img width="350" alt="image" src="https://user-images.githubusercontent.com/18642838/170455920-1516b3b8-cb7b-4e2d-8f72-b189377b3032.png">
+<img width="349" alt="image" src="https://user-images.githubusercontent.com/18642838/170881260-4a33cee5-3d3f-4a46-8f4c-8ec26985069d.png">
 
 
 ### 2- create learn more screen 
@@ -52,39 +52,38 @@ the screen layout will return a text widget wrapped with a single child scroll v
           ],
         ));
 ```
-### 3- update appBar widget to fit the new screen 
+### 3- create Secondry screens appbar under lib/widgets/appbar 
+
+<img width="345" alt="image" src="https://user-images.githubusercontent.com/18642838/170881344-84af5323-3ce6-46d2-b32e-645055701a35.png">
+
+### 4- update appbar widget to change back icon color with the theme.
+
 ```
-class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  final bool showLogo;
+   return AppBar(
+      shape: const Border(top: BorderSide(color: Colors.green, width: 3)),
+      backgroundColor: Theme.of(context).cardColor,
+      centerTitle: false,
+      titleSpacing: 0,
+      shadowColor: Theme.of(context).shadowColor,
+      iconTheme: IconThemeData(
+        color: Theme.of(context).primaryColor, //change your color here
+      ),
+      title: Padding(
+```
+### 5- create Secondry Screen App Bar that accept title as a paramter
+
+```
+class SecondryScreensAppbar extends ConsumerWidget
+    implements PreferredSizeWidget {
   final String title;
-  final int page;
-  final int listLength;
-  const FlashCardsAppBar({
+
+  const SecondryScreensAppbar({
     Key? key,
-    this.showLogo = true,
     this.title = "",
-    this.page = 0,
-    this.listLength = 0,
   }) : super(key: key);
 ```
 
-```
-  if (showLogo)
-    InkWell(
-      onTap: () => title.isNotEmpty
-          ? null
-          : Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const MainScreen()),
-            ),
-      child: SizedBox(
-        height: 30,
-        child: Image.asset('assets/images/LogoMaster.png'),
-      ),
-    ),
-```
-### 4- navigate to LearnMore screen in the slide widget
+### 6- navigate to LearnMore screen in the slide widget
 ```
   ..onTap = () => Navigator.push(
         context,
@@ -94,5 +93,5 @@ class FlashCardsAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 tags: tags,
                 text: widget.slide.learnMore)),
       ),
-```
+````
 

@@ -15,6 +15,9 @@ class FlashCardsAppBar extends StatelessWidget {
       centerTitle: false,
       titleSpacing: 0,
       shadowColor: Theme.of(context).shadowColor,
+      iconTheme: IconThemeData(
+        color: Theme.of(context).primaryColor, //change your color here
+      ),
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
