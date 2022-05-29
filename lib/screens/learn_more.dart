@@ -1,8 +1,9 @@
-import 'package:flash_cards_portrait_app/widgets/appbar.dart';
 import 'package:flash_cards_portrait_app/widgets/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:styled_text/styled_text.dart';
+
+import '../widgets/appbar/secondry_screens_appbar.dart';
 
 class LearnMore extends StatelessWidget {
   final String text;
@@ -18,7 +19,7 @@ class LearnMore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: FlashCardsAppBar(title: "Learn more...", showLogo: false),
+        appBar: SecondryScreensAppbar(title: "Learn more..."),
         body: Column(
           children: [
             Expanded(

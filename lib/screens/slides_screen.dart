@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/gestures.dart';
 import '../models/category.dart';
 import '../models/slide.dart';
-import '../widgets/appbar.dart';
 import '../widgets/footer.dart';
 import '../widgets/slide_widget.dart';
+import '../widgets/appbar/slides_screen_appbar.dart';
 
 class SlidesScreen extends StatefulWidget {
   final Category category;
@@ -70,11 +70,7 @@ class _MainScreenState extends State<SlidesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlashCardsAppBar(
-        page: page,
-        listLength: list.length,
-        glossries: widget.category.glossries,
-      ),
+      appBar: SlidesScreenAppbar(page: page, listLength: list.length),
       body: Column(
         children: [
           Expanded(

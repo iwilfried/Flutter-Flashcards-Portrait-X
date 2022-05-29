@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../widgets/appbar.dart';
+import '../widgets/appbar/secondry_screens_appbar.dart';
 
 class ImpressumScreen extends StatelessWidget {
   const ImpressumScreen({Key? key}) : super(key: key);
@@ -10,9 +10,8 @@ class ImpressumScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: FlashCardsAppBar(
+        appBar: SecondryScreensAppbar(
           title: "Impressum",
-          showLogo: false,
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
