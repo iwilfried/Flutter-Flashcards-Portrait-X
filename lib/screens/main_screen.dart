@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../models/category.dart';
+import '../widgets/appbar/main_screen_appbar.dart';
 import 'categories_screen.dart';
 import 'home_screen.dart';
-import '../widgets/appbar.dart';
 import '../widgets/footer.dart';
 
 class MainScreen extends StatefulWidget {
@@ -61,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlashCardsAppBar(title: "Accelerated Learning"),
+      appBar: MainScreenAppbar(title: "Accelerated Learning"),
       body: Scaffold(
         body: Column(
           children: [
